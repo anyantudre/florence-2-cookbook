@@ -1,5 +1,9 @@
 # Florence-2 Cookbook
 
+<p align="center">
+  <img src="img/banner.png" alt="Florence-2 Cookbook" width="100%">
+</p>
+
 Hands-on notebooks and a short guide to Florence-2, Microsoft's lightweight vision-language model: run inference on 14 built-in tasks, auto-label images, fine-tune the model on your own data, score its boxes, answer questions and measure its speed.
 
 For models, tools, papers and tutorials from the wider ecosystem, see the [Awesome Florence-2 list](AWESOME.md).
