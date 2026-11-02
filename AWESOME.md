@@ -61,7 +61,7 @@ Microsoft has not released a successor, and it never published the FLD-5B traini
 
 ## When to use Florence-2
 
-Florence-2 answers fixed task prompts (labelling, grounding, captioning); it does not chat. The table shows where it still holds up in late 2026 and where newer models do better.
+Florence-2 answers fixed task prompts (labelling, grounding, captioning), and its `-ft` checkpoints also answer short questions. It does not chat. The table shows where it still holds up in late 2026 and where newer models do better.
 
 | Job | Florence-2? | Consider instead |
 |-----|-------------|------------------|
@@ -71,13 +71,14 @@ Florence-2 answers fixed task prompts (labelling, grounding, captioning); it doe
 | Detection on your own classes, with training data | ❌ 43.4 COCO mAP after fine-tuning | [RF-DETR](https://arxiv.org/abs/2511.09554) (48 to 60 AP), YOLO |
 | Zero-shot detection with confidence scores | ❌ No scores | [Grounding DINO 1.5](https://arxiv.org/abs/2405.10300), [YOLOE](https://arxiv.org/abs/2503.07465) |
 | Document parsing and document QA | ❌ | [PaddleOCR-VL](https://arxiv.org/abs/2510.14528), [Qwen3-VL](https://arxiv.org/abs/2511.21631) |
-| Free-form questions, chat, other languages | ❌ | [Qwen3-VL](https://arxiv.org/abs/2511.21631), [SmolVLM](https://arxiv.org/abs/2504.05299), Moondream |
+| Short questions about an image | ✅ with `-ft` checkpoints: 57.5% VQA accuracy on 200 A-OKVQA questions (large-ft, [notebook 8](README.md#notebooks)) | A chat model, if you need longer answers |
+| Chat, explanations, other languages | ❌ | [Qwen3-VL](https://arxiv.org/abs/2511.21631), [SmolVLM](https://arxiv.org/abs/2504.05299), Moondream |
 
 Florence-2 numbers come from the [model card](https://huggingface.co/microsoft/Florence-2-large). Every zero-shot detector, Florence-2 included, drops sharply on out-of-domain data ([Roboflow100-VL](https://arxiv.org/abs/2505.20612)), so plan to fine-tune for real projects.
 
 ## Tutorials
 
-- 🟢 [Notebooks in this repository](README.md#notebooks) - Inference, auto-labelling with YOLO export, and two fine-tuning recipes on the native class.
+- 🟢 [Notebooks in this repository](README.md#notebooks) - Inference, auto-labelling with YOLO export, two fine-tuning recipes, multi-region prompts, confidence scores, a speed benchmark and question answering, all on the native class.
 - 🟠 [Fine-tuning Florence-2](https://huggingface.co/blog/finetune-florence2) - Hugging Face blog, fine-tuning on DocVQA. Its encoder-freezing loop sets `is_trainable` instead of `requires_grad`, so the encoder still trains.
 - 🟠 [Fine-tune Florence-2 for object detection](https://blog.roboflow.com/fine-tune-florence-2-object-detection/) - Roboflow blog, LoRA on a custom dataset.
 - 🟠 [Florence-2: open source vision foundation model by Microsoft](https://blog.roboflow.com/florence-2/) - Roboflow's overview of the model and tasks.
@@ -172,7 +173,7 @@ Reliability:
 - 🟠 [OpenVINO notebook](https://github.com/openvinotoolkit/openvino_notebooks/tree/latest/notebooks/florence2) - Converts and runs Florence-2 on Intel hardware.
 - 🟠 [happyme531/Florence-2-base-ft-ONNX-RKNN2](https://huggingface.co/happyme531/Florence-2-base-ft-ONNX-RKNN2) - Rockchip NPU (AGPL-3.0).
 
-Few speed numbers are published. [Roboflow](https://docs.roboflow.com/models/supported-models/florence-2) measures a 128-token caption at 652 ms (base) and 1,120 ms (large) on an L4 GPU, and [mlsysbook](https://mlsysbook.ai/kits/contents/raspi/vlm/vlm.html) times every task on a Raspberry Pi 5 (16 s for a caption with base). Latency grows with the length of the output, so captions are fast and segmentation is slow.
+Few speed numbers are published. [Roboflow](https://docs.roboflow.com/models/supported-models/florence-2) measures a 128-token caption at 652 ms (base) and 1,120 ms (large) on an L4 GPU, and [mlsysbook](https://mlsysbook.ai/kits/contents/raspi/vlm/vlm.html) times every task on a Raspberry Pi 5 (16 s for a caption with base). This repository's [speed benchmark](README.md#notebooks) times every task on an RTX 4070 Laptop GPU: with base, float16 and greedy decoding, a caption takes about 0.2 s, detection 0.3 s, OCR 0.35 s and referring segmentation 5.5 s. Large is 1.3 to 2.7× slower, and the CPU needs about 2 s for a caption with base. Latency grows with the length of the output, so captions are fast and segmentation is slow.
 
 ## Integrations and pipelines
 
@@ -217,10 +218,10 @@ These come from the model itself, so the native implementation does not fix them
 
 | Limitation | Workaround | Discussion |
 |------------|------------|------------|
-| No confidence scores for boxes | Score boxes from the token probabilities of the `<loc_>` tokens (experimental) | [#88](https://huggingface.co/microsoft/Florence-2-large/discussions/88) |
-| Grounding returns a box even when the object is absent | Check with a second model or a confidence threshold | [#88](https://huggingface.co/microsoft/Florence-2-large/discussions/88) |
-| No free-form questions (VQA) | Fine-tune with your own task prefix (see [notebook 3](README.md#notebooks)), or use a chat model | [#58](https://huggingface.co/microsoft/Florence-2-large/discussions/58), [this repo #3](https://github.com/anyantudre/Florence-2-Vision-Language-Model/issues/3) |
-| One region per `<REGION_TO_*>` prompt | Send one prompt per box in a single batch for the same image | [#85](https://huggingface.co/microsoft/Florence-2-large/discussions/85), [this repo #1](https://github.com/anyantudre/Florence-2-Vision-Language-Model/issues/1) |
+| No confidence scores for boxes | Combine the `<loc_>` token probabilities with a second check of the region. On COCO this separates correct from hallucinated boxes with an AUC of 0.82: useful for filtering, not a calibrated probability ([notebook 6](README.md#notebooks)) | [#88](https://huggingface.co/microsoft/Florence-2-large/discussions/88) |
+| Grounding returns a box even when the object is absent | Filter with the confidence score from notebook 6, or check with a second model | [#88](https://huggingface.co/microsoft/Florence-2-large/discussions/88) |
+| Pretrained checkpoints do not answer questions | Use a `-ft` checkpoint and pass the question as the prompt: it gives short answers ([notebook 8](README.md#notebooks)). For chat or explanations, use a chat model | [#58](https://huggingface.co/microsoft/Florence-2-large/discussions/58), [this repo #3](https://github.com/anyantudre/Florence-2-Vision-Language-Model/issues/3) |
+| One region per `<REGION_TO_*>` prompt | Send one prompt per box in a single batch for the same image ([notebook 5](README.md#notebooks)) | [#85](https://huggingface.co/microsoft/Florence-2-large/discussions/85), [this repo #1](https://github.com/anyantudre/Florence-2-Vision-Language-Model/issues/1) |
 | `<OCR>` merges lines | Use `<OCR_WITH_REGION>` to get one entry per line | [#90](https://huggingface.co/microsoft/Florence-2-large/discussions/90) |
 | Misses small objects in busy scenes | Run on image tiles, e.g. with supervision's `InferenceSlicer` | [#96](https://huggingface.co/microsoft/Florence-2-large/discussions/96) |
 | English output only | Fine-tune on your language | [#101](https://huggingface.co/microsoft/Florence-2-large/discussions/101) |
