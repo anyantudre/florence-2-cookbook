@@ -14,7 +14,7 @@ For models, tools, papers and tutorials from the wider ecosystem, see the [Aweso
 
 ## Why this repository
 
-I was working on a project that needed a vision-language model for several different tasks, on limited hardware. None of the models available at the time gave satisfying results in that setting. When Microsoft released Florence-2, I was impressed by how well it performed across so many tasks for its size. This repository gathers the notebooks and notes I put together while exploring it.
+In early 2024, I was working on a project that needed a vision-language model for several different tasks, on limited hardware. None of the models available at the time gave satisfying results in that setting. When Microsoft released Florence-2, I was impressed by how well it performed across so many tasks for its size. This repository gathers the notebooks and notes I put together while exploring it.
 
 ## Contents
 
