@@ -1,6 +1,6 @@
 # Awesome Florence-2
 
-A curated list of models, tools, papers and tutorials for Florence-2, Microsoft's lightweight vision-language model. Part of [Florence-2 Notebooks & Resources](README.md).
+A curated list of models, tools, papers and tutorials for Florence-2, Microsoft's lightweight vision-language model. Part of the [Florence-2 Cookbook](README.md).
 
 > [!NOTE]
 > This is an independent community list, not affiliated with or endorsed by Microsoft.
@@ -220,8 +220,8 @@ These come from the model itself, so the native implementation does not fix them
 |------------|------------|------------|
 | No confidence scores for boxes | Combine the `<loc_>` token probabilities with a second check of the region. On COCO this separates correct from hallucinated boxes with an AUC of 0.82: useful for filtering, not a calibrated probability ([notebook 6](README.md#notebooks)) | [#88](https://huggingface.co/microsoft/Florence-2-large/discussions/88) |
 | Grounding returns a box even when the object is absent | Filter with the confidence score from notebook 6, or check with a second model | [#88](https://huggingface.co/microsoft/Florence-2-large/discussions/88) |
-| Pretrained checkpoints do not answer questions | Use a `-ft` checkpoint and pass the question as the prompt: it gives short answers ([notebook 8](README.md#notebooks)). For chat or explanations, use a chat model | [#58](https://huggingface.co/microsoft/Florence-2-large/discussions/58), [this repo #3](https://github.com/anyantudre/Florence-2-Vision-Language-Model/issues/3) |
-| One region per `<REGION_TO_*>` prompt | Send one prompt per box in a single batch for the same image ([notebook 5](README.md#notebooks)) | [#85](https://huggingface.co/microsoft/Florence-2-large/discussions/85), [this repo #1](https://github.com/anyantudre/Florence-2-Vision-Language-Model/issues/1) |
+| Pretrained checkpoints do not answer questions | Use a `-ft` checkpoint and pass the question as the prompt: it gives short answers ([notebook 8](README.md#notebooks)). For chat or explanations, use a chat model | [#58](https://huggingface.co/microsoft/Florence-2-large/discussions/58), [this repo #3](https://github.com/anyantudre/florence-2-cookbook/issues/3) |
+| One region per `<REGION_TO_*>` prompt | Send one prompt per box in a single batch for the same image ([notebook 5](README.md#notebooks)) | [#85](https://huggingface.co/microsoft/Florence-2-large/discussions/85), [this repo #1](https://github.com/anyantudre/florence-2-cookbook/issues/1) |
 | `<OCR>` merges lines | Use `<OCR_WITH_REGION>` to get one entry per line | [#90](https://huggingface.co/microsoft/Florence-2-large/discussions/90) |
 | Misses small objects in busy scenes | Run on image tiles, e.g. with supervision's `InferenceSlicer` | [#96](https://huggingface.co/microsoft/Florence-2-large/discussions/96) |
 | English output only | Fine-tune on your language | [#101](https://huggingface.co/microsoft/Florence-2-large/discussions/101) |
