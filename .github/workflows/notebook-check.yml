@@ -1,0 +1,39 @@
+# Checks once a month that the notebooks' core code still works with the
+# latest transformers and supervision releases. If it breaks, it opens an issue.
+name: Notebook check
+
+on:
+  schedule:
+    - cron: "0 6 2 * *" # 06:00 UTC on the 2nd of every month
+  workflow_dispatch: # allows a manual run from the Actions tab
+
+jobs:
+  notebook-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install the latest libraries
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -U transformers supervision pillow requests
+
+      - name: Run the check
+        run: python .github/scripts/notebook_check.py
+
+      - name: Open an issue if the check failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "Notebook check failed" \
+            --body "The monthly check found that the notebooks' code no longer works with the latest libraries. See the run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
