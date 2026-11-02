@@ -1,115 +1,136 @@
-<div align="center">
-  <h1>Florence-2: Microsoft's Cutting-edge Vision Language Models</h1>
-  <p align="center">
-    🕸 <a href="https://www.linkedin.com/in/anyantudre">LinkedIn</a> • 
-    📙 <a href="https://www.kaggle.com/waalbannyantudre">Kaggle</a> • 
-    💻 <a href="https://anyantudre.medium.com/">Medium Blog</a> • 
-    🤗 <a href="https://huggingface.co/anyantudre">Hugging Face</a> • 
-  </p>
-</div>
-<br/>
+# Florence-2 Notebooks & Resources
 
-<a href="" style="align-items:center"> <img src="https://github.com/ANYANTUDRE/Florence-2-Vision-Language-Model/blob/main/img/card.png" alt="Open In" class="center"></a>
+Hands-on notebooks and a short guide to **Florence-2**, Microsoft's lightweight vision-language model: run inference on 14 built-in tasks, auto-label images, and fine-tune the model on your own data.
 
+[![arXiv](https://img.shields.io/badge/arXiv-2311.06242-b31b1b.svg)](https://arxiv.org/abs/2311.06242)
+[![Models on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Models-Florence--2-yellow)](https://huggingface.co/florence-community)
+[![Transformers docs](https://img.shields.io/badge/%F0%9F%A4%97%20Transformers-docs-blue)](https://huggingface.co/docs/transformers/model_doc/florence2)
 
-# 🔗 Short Links
-- [Florence-2 technical report](https://arxiv.org/abs/2311.06242)
-- [HuggingFace's transformers implementation of Florence-2 model](https://huggingface.co/microsoft/Florence-2-large)
+> [!NOTE]
+> This is an independent community project. Florence-2 was created by Microsoft; this repository is not affiliated with or endorsed by Microsoft. For the original work, see the [paper](https://arxiv.org/abs/2311.06242) and the [official model card](https://huggingface.co/microsoft/Florence-2-large).
 
+## Why this repository
 
-# 📃 Model Description
-Florence-2, released by Microsoft in June 2024, is an advanced, lightweight foundation **vision-language model open-sourced** under the MIT license. This model is very attractive because of its small size (0.2B and 0.7B) and strong performance on a variety of computer vision and vision-language tasks.
-Despite its small size, it achieves results comparable to those of much larger models, such as Kosmos-2. The model's strength lies not in a complex architecture but in the large-scale **FLD-5B dataset**, consisting of 126 million images and 5.4 billion comprehensive visual annotations.
+I was working on a project that needed a vision-language model for several different tasks, on limited hardware. None of the models available at the time gave satisfying results in that setting. When Microsoft released Florence-2, I was impressed by how well it performed across so many tasks for its size. This repository gathers the notebooks and notes I put together while exploring it.
 
-#### **Florence-2 model series**
-| Model   | Model size | Model Description | 
-| ------- | ------------- |   ------------- |  
-| Florence-2-base [[HF]](https://huggingface.co/microsoft/Florence-2-base) | 0.23B | Pretrained model with FLD-5B  
-| Florence-2-large [[HF]](https://huggingface.co/microsoft/Florence-2-large) | 0.77B  | Pretrained model with FLD-5B  
-| Florence-2-base-ft [[HF]](https://huggingface.co/microsoft/Florence-2-base-ft) | 0.23B  | Finetuned model on a colletion of downstream tasks
-| Florence-2-large-ft [[HF]](https://huggingface.co/microsoft/Florence-2-large-ft) | 0.77B | Finetuned model on a colletion of downstream tasks
+## Contents
 
-#### **Tasks**
-Florence 2 supports many tasks out of the box:
--  **Caption**,
--  **Detailed Caption**,
--  **More Detailed Caption**,
--  **Dense Region Caption**,
--  **Object Detection**,
--  **OCR**,
--  **Caption to Phrase Grounding**,
--  **segmentation**,
--  **Region proposal**,
--  **OCR**,
--  **OCR with Region**.  
-You can try out the model via [HF Space]().
+- [Notebooks](#notebooks)
+- [Quickstart](#quickstart)
+- [About Florence-2](#about-florence-2)
+- [Resources](#resources)
+- [Citation](#citation)
 
+## Notebooks
 
-# 🕸 Unified Representation
-Vision tasks are diverse and vary in terms of spatial hierarchy and semantic granularity. Instance segmentation provides detailed information about object locations within an image but lacks semantic information. On the other hand, image captioning allows for a deeper understanding of the relationships between objects, but without reference to their actual locations.
+| # | Notebook | What it covers | Open |
+|---|----------|----------------|------|
+| 1 | [Sample inference](1.%20Florence-2%20sample%20inference.ipynb) | All 14 built-in tasks: captioning, detection, grounding, segmentation, OCR, cascaded tasks | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/anyantudre/Florence-2-Vision-Language-Model/blob/main/1.%20Florence-2%20sample%20inference.ipynb) |
+| 2 | [Data auto-labelling](2.%20Data%20auto-labelling%20with%20Florence-2.ipynb) | Label a folder of images with `<OD>` and export YOLO annotations | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/anyantudre/Florence-2-Vision-Language-Model/blob/main/2.%20Data%20auto-labelling%20with%20Florence-2.ipynb) |
+| 3 | [Fine-tuning on DocVQA](3.%20Fine-tuning%20Florence-2.ipynb) | Full fine-tuning for document question answering | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/anyantudre/Florence-2-Vision-Language-Model/blob/main/3.%20Fine-tuning%20Florence-2.ipynb) |
+| 4 | [Fine-tuning on a detection dataset](4.%20Finetuning%20Florence-2%20on%20detection%20dataset%20-%20Roboflow.ipynb) | LoRA fine-tuning on a Roboflow dataset, with mAP and confusion matrix | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/anyantudre/Florence-2-Vision-Language-Model/blob/main/4.%20Finetuning%20Florence-2%20on%20detection%20dataset%20-%20Roboflow.ipynb) |
 
-<a href=""> <img src="https://github.com/ANYANTUDRE/Florence-2-Vision-Language-Model/blob/main/img/representation.jpeg" alt="Open In "></a>   
-*Figure 1. Illustration showing the level of spatial hierarchy and semantic granularity expressed by each task. Source: Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks.*
+Notebook 1 is adapted from Microsoft's [sample inference notebook](https://huggingface.co/microsoft/Florence-2-large/blob/main/sample_inference.ipynb), notebook 3 from the Hugging Face [fine-tuning tutorial](https://huggingface.co/blog/finetune-florence2), and notebook 4 from [Roboflow's notebook](https://github.com/roboflow/notebooks). Credit goes to their authors.
 
-The authors of Florence-2 decided that instead of training a series of separate models capable of executing individual tasks, they would unify their representation and train a single model capable of executing over 10 tasks. However, this requires a new dataset.
+## Quickstart
 
+Florence-2 is supported natively in recent versions of 🤗 Transformers through the [`florence-community`](https://huggingface.co/florence-community) checkpoints (tested with `transformers` 5.22):
 
-# 💎 Dataset
-Florence-2's strength doesn't stem from its architecture, but from the massive dataset it was pre-trained on. The authors noted that leading computer vision datasets typically contain limited information - WIT only includes image/caption pairs, SA-1B only contains images and associated segmentation masks. Therefore, they decided to build a new **FLD-5B dataset** containing a wide range of information about each image - boxes, masks, captions, and grounding. The dataset creation process was largely automated. The authors used off-the-shelf task-specific models and a set of heuristics and quality checks to clean the obtained results. The result was a new dataset containing over 5 billion annotations for 126 million images, which was used to pre-train the Florence-2 model.
+```python
+import requests
+import torch
+from PIL import Image
+from transformers import AutoProcessor, Florence2ForConditionalGeneration
 
-<a href=""> <img src="https://github.com/ANYANTUDRE/Florence-2-Vision-Language-Model/blob/main/img/annotation.jpeg" alt="Open In "></a>
-*An illustrative example of an image and its corresponding annotations in the FLD-5B dataset. Source: Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks.*
+model_id = "florence-community/Florence-2-base-ft"
+model = Florence2ForConditionalGeneration.from_pretrained(model_id, dtype=torch.float16).to("cuda")
+processor = AutoProcessor.from_pretrained(model_id)
 
-FLD-5B is not yet publicly available, but the authors announced its upcoming release during CVPR 2024.
+url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/tasks/car.jpg"
+image = Image.open(requests.get(url, stream=True).raw)
 
-<a href=""> <img src="https://github.com/ANYANTUDRE/Florence-2-Vision-Language-Model/blob/main/img/dataset.jpeg" alt="Open In "></a>
-*Summary of size, spatial hierarchy, and semantic granularity of top datasets. Source: Florence-2 CVPR 2024 poster.*
+task = "<OD>"
+inputs = processor(text=task, images=image, return_tensors="pt").to("cuda", torch.float16)
+generated_ids = model.generate(**inputs, max_new_tokens=1024, num_beams=3)
+text = processor.batch_decode(generated_ids, skip_special_tokens=False)[0]
+print(processor.post_process_generation(text, task=task, image_size=image.size))
+# {'<OD>': {'bboxes': [[34, 160, 597, 371], ...], 'labels': ['car', 'wheel', 'wheel']}}
+```
 
+> [!TIP]
+> The original `microsoft/Florence-2-*` checkpoints load with `trust_remote_code=True`, and that custom code breaks on recent Transformers versions (errors such as `'_supports_sdpa'` or `forced_bos_token_id`). Use the `florence-community` checkpoints instead.
 
-# 🧩 Architecture and Pre-training details 
-Regardless of the computer vision task being performed, Florence-2 formulates the problem as a sequence-to-sequence task. Florence-2 takes an image and text as inputs, and generates text as output. The model has a simple structure. It uses a DaViT vision encoder to convert images into visual embeddings, and BERT to convert text prompts into text and location embeddings. The resulting embeddings are then processed by a standard encoder-decoder transformer architecture, generating text and location tokens.
+## About Florence-2
 
-<a href=""> <img src="https://github.com/ANYANTUDRE/Florence-2-Vision-Language-Model/blob/main/img/architecture.png" alt="Open In "></a>
-*Overview of Florence-2 architecture. Source: Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks.*
+Florence-2 ([Xiao et al., 2023](https://arxiv.org/abs/2311.06242)) is an open-source (MIT) vision foundation model from Microsoft. It handles many vision and vision-language tasks with a single model: you choose the task with a text prompt, and the model answers in text. Despite its small size, it matches or beats much larger models such as Kosmos-2 (1.6B) in zero-shot evaluations.
 
-For region-specific tasks, location tokens representing quantized coordinates are added to the tokenizer's vocabulary.
-- **Box Representation (x0, y0, x1, y1):** Location tokens correspond to the box coordinates, specifically the top-left and bottom-right corners.
-- **Polygon Representation (x0, y0, ..., xn, yn):** Location tokens represent the polygon's vertices in clockwise order.
+### Models
 
+| Model | Size | Description |
+|-------|------|-------------|
+| Florence-2-base ([original](https://huggingface.co/microsoft/Florence-2-base) · [transformers](https://huggingface.co/florence-community/Florence-2-base)) | 0.23B | Pretrained on FLD-5B |
+| Florence-2-large ([original](https://huggingface.co/microsoft/Florence-2-large) · [transformers](https://huggingface.co/florence-community/Florence-2-large)) | 0.77B | Pretrained on FLD-5B |
+| Florence-2-base-ft ([original](https://huggingface.co/microsoft/Florence-2-base-ft) · [transformers](https://huggingface.co/florence-community/Florence-2-base-ft)) | 0.23B | Fine-tuned on a collection of downstream tasks |
+| Florence-2-large-ft ([original](https://huggingface.co/microsoft/Florence-2-large-ft) · [transformers](https://huggingface.co/florence-community/Florence-2-large-ft)) | 0.77B | Fine-tuned on a collection of downstream tasks |
 
-# 🦾 Capabilities
-Florence-2 is smaller and more accurate than its predecessors. The Florence-2 series consists of two models: Florence-2-base and Florence-2-large, with 0.23 billion and 0.77 billion parameters, respectively. This size allows for deployment on even mobile devices.
-Despite its small size, Florence-2 achieves better zero-shot results than Kosmos-2 across all benchmarks, even though Kosmos-2 has 1.6 billion parameters.
+### Tasks
 
-#### Examples
+| Task | Prompt | Extra input |
+|------|--------|-------------|
+| Caption | `<CAPTION>`, `<DETAILED_CAPTION>`, `<MORE_DETAILED_CAPTION>` | – |
+| Object detection | `<OD>` | – |
+| Dense region caption | `<DENSE_REGION_CAPTION>` | – |
+| Region proposal | `<REGION_PROPOSAL>` | – |
+| Phrase grounding | `<CAPTION_TO_PHRASE_GROUNDING>` | caption |
+| Referring expression segmentation | `<REFERRING_EXPRESSION_SEGMENTATION>` | phrase |
+| Region to segmentation | `<REGION_TO_SEGMENTATION>` | region (`<loc_x1><loc_y1><loc_x2><loc_y2>`) |
+| Open-vocabulary detection | `<OPEN_VOCABULARY_DETECTION>` | phrase |
+| Region to category / description | `<REGION_TO_CATEGORY>`, `<REGION_TO_DESCRIPTION>` | region |
+| OCR | `<OCR>`, `<OCR_WITH_REGION>` | – |
 
+Region coordinates are quantized to `[0, 999]`. Notebook 1 shows every task and its output format.
 
-# 🏋🏾‍♂️ Finetuning
-Even if Florence-2 supports many tasks, maybe your task or domain might not be supported, or you may want to better control the model's output for your task. That's when you will need to fine-tune.
-- This post shows an example on [fine-tuning Florence on DocVQA](https://huggingface.co/blog/finetune-florence2).
-- [Finetuning notebook]()
+### How it works
 
+Vision tasks differ in **spatial hierarchy** (image-level vs. pixel-level) and **semantic granularity** (a label vs. a detailed description). Florence-2 covers all of them with one sequence-to-sequence model.
 
-# 🗂 Resources
-| Title | Type | Brief Description  | Links |
-|---------|--------------------|-------------------------------|----------------------------------------------------------|
-| **Florence-2 Demo** | Demo  | HF Space | [Link]() |
-| **Florence-2 DocVQA Demo** | Demo  | HF Space | [Link]() |
-| **Florence-2 Finetuned Demo** | Demo  | HF Space | [Link]() |
-| **Florence-2 Inference Notebook** | Notebook  | Notebook | [Link]() |
-| **Florence-2 Finetuning Notebook** | Notebook  | Notebook | [Link]() |
-| **Vision Language Models Explained** |  Blog article | article | [Link](https://huggingface.co/blog/vlms) |
-| **Florence-2 Finetuning on DocVQA** | Video  | Video | [Link]() |
-| **Florence-2 Finetuning on** | Video  | Vido | [Link]() |
+<p align="center">
+  <img src="img/representation.jpeg" alt="Spatial hierarchy and semantic granularity across vision tasks" width="700">
+  <br><em>Source: Florence-2 paper.</em>
+</p>
 
+A DaViT vision encoder turns the image into visual embeddings. These are concatenated with the embeddings of the text prompt and passed to a transformer encoder-decoder, which generates text. For region tasks, the vocabulary includes location tokens: boxes are written as `(x0, y0, x1, y1)` and polygons as a clockwise list of vertices.
 
-# 🔗 Citations and References
-- @article{xiao2023florence,
-  title={Florence-2: Advancing a unified representation for a variety of vision tasks},
-  author={Xiao, Bin and Wu, Haiping and Xu, Weijian and Dai, Xiyang and Hu, Houdong and Lu, Yumao and Zeng, Michael and Liu, Ce and Yuan, Lu},
-  journal={arXiv preprint arXiv:2311.06242},
-  year={2023}
+<p align="center">
+  <img src="img/architecture.png" alt="Florence-2 architecture" width="700">
+  <br><em>Source: Florence-2 paper.</em>
+</p>
+
+### Training data: FLD-5B
+
+The model's strength comes mostly from its data. The authors built **FLD-5B**, with 5.4 billion annotations (boxes, masks, captions, grounding) on 126 million images, generated largely automatically with specialist models and filtered with quality checks.
+
+<p align="center">
+  <img src="img/annotation.jpeg" alt="Example of FLD-5B annotations" width="700">
+  <br><em>Source: Florence-2 paper.</em>
+</p>
+
+## Resources
+
+- **Paper:** [Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks](https://arxiv.org/abs/2311.06242)
+- **Model cards:** [microsoft/Florence-2-large](https://huggingface.co/microsoft/Florence-2-large) · [Transformers documentation](https://huggingface.co/docs/transformers/model_doc/florence2)
+- **Fine-tuning:** [Fine-tuning Florence-2 (Hugging Face blog)](https://huggingface.co/blog/finetune-florence2) · [Florence-2 DocVQA model](https://huggingface.co/HuggingFaceM4/Florence-2-DocVQA) · [DocVQA demo](https://huggingface.co/spaces/andito/Florence-2-DocVQA)
+- **Guides:** [Florence-2: Open Source Vision Foundation Model by Microsoft (Roboflow blog)](https://blog.roboflow.com/florence-2/) · [Vision Language Models Explained](https://huggingface.co/blog/vlms)
+
+## Citation
+
+If you use Florence-2, please cite the original paper:
+
+```bibtex
+@article{xiao2023florence,
+  title   = {Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks},
+  author  = {Xiao, Bin and Wu, Haiping and Xu, Weijian and Dai, Xiyang and Hu, Houdong and Lu, Yumao and Zeng, Michael and Liu, Ce and Yuan, Lu},
+  journal = {arXiv preprint arXiv:2311.06242},
+  year    = {2023}
 }
-
-- Piotr Skalski. (Jun 20, 2024). Florence-2: Open Source Vision Foundation Model by Microsoft. [Roboflow Blog](https://blog.roboflow.com/florence-2/)
-- [Fine-tuning Florence-2 - Microsoft's Cutting-edge Vision Language Models](https://huggingface.co/blog/finetune-florence2)
+```
