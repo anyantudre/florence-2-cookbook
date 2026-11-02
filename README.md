@@ -1,10 +1,13 @@
 # Florence-2 Notebooks & Resources
 
-Hands-on notebooks and a short guide to **Florence-2**, Microsoft's lightweight vision-language model: run inference on 14 built-in tasks, auto-label images, and fine-tune the model on your own data.
+Hands-on notebooks and a short guide to Florence-2, Microsoft's lightweight vision-language model: run inference on 14 built-in tasks, auto-label images, and fine-tune the model on your own data.
+
+For models, tools, papers and tutorials from the wider ecosystem, see the [Awesome Florence-2 list](AWESOME.md).
 
 [![arXiv](https://img.shields.io/badge/arXiv-2311.06242-b31b1b.svg)](https://arxiv.org/abs/2311.06242)
 [![Models on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Models-Florence--2-yellow)](https://huggingface.co/florence-community)
 [![Transformers docs](https://img.shields.io/badge/%F0%9F%A4%97%20Transformers-docs-blue)](https://huggingface.co/docs/transformers/model_doc/florence2)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > [!NOTE]
 > This is an independent community project. Florence-2 was created by Microsoft; this repository is not affiliated with or endorsed by Microsoft. For the original work, see the [paper](https://arxiv.org/abs/2311.06242) and the [official model card](https://huggingface.co/microsoft/Florence-2-large).
@@ -18,8 +21,9 @@ I was working on a project that needed a vision-language model for several diffe
 - [Notebooks](#notebooks)
 - [Quickstart](#quickstart)
 - [About Florence-2](#about-florence-2)
-- [Resources](#resources)
+- [Awesome Florence-2 list](AWESOME.md)
 - [Citation](#citation)
+- [License](#license)
 
 ## Notebooks
 
@@ -34,7 +38,7 @@ Notebook 1 is adapted from Microsoft's [sample inference notebook](https://huggi
 
 ## Quickstart
 
-Florence-2 is supported natively in recent versions of 🤗 Transformers through the [`florence-community`](https://huggingface.co/florence-community) checkpoints (tested with `transformers` 5.22):
+Recent versions of Hugging Face Transformers support Florence-2 natively through the [`florence-community`](https://huggingface.co/florence-community) checkpoints (tested with `transformers` 5.22):
 
 ```python
 import requests
@@ -77,22 +81,22 @@ Florence-2 ([Xiao et al., 2023](https://arxiv.org/abs/2311.06242)) is an open-so
 
 | Task | Prompt | Extra input |
 |------|--------|-------------|
-| Caption | `<CAPTION>`, `<DETAILED_CAPTION>`, `<MORE_DETAILED_CAPTION>` | – |
-| Object detection | `<OD>` | – |
-| Dense region caption | `<DENSE_REGION_CAPTION>` | – |
-| Region proposal | `<REGION_PROPOSAL>` | – |
+| Caption | `<CAPTION>`, `<DETAILED_CAPTION>`, `<MORE_DETAILED_CAPTION>` | none |
+| Object detection | `<OD>` | none |
+| Dense region caption | `<DENSE_REGION_CAPTION>` | none |
+| Region proposal | `<REGION_PROPOSAL>` | none |
 | Phrase grounding | `<CAPTION_TO_PHRASE_GROUNDING>` | caption |
 | Referring expression segmentation | `<REFERRING_EXPRESSION_SEGMENTATION>` | phrase |
 | Region to segmentation | `<REGION_TO_SEGMENTATION>` | region (`<loc_x1><loc_y1><loc_x2><loc_y2>`) |
 | Open-vocabulary detection | `<OPEN_VOCABULARY_DETECTION>` | phrase |
 | Region to category / description | `<REGION_TO_CATEGORY>`, `<REGION_TO_DESCRIPTION>` | region |
-| OCR | `<OCR>`, `<OCR_WITH_REGION>` | – |
+| OCR | `<OCR>`, `<OCR_WITH_REGION>` | none |
 
 Region coordinates are quantized to `[0, 999]`. Notebook 1 shows every task and its output format.
 
 ### How it works
 
-Vision tasks differ in **spatial hierarchy** (image-level vs. pixel-level) and **semantic granularity** (a label vs. a detailed description). Florence-2 covers all of them with one sequence-to-sequence model.
+Vision tasks differ in spatial hierarchy (image-level or pixel-level) and in semantic granularity (a label or a detailed description). Florence-2 covers all of them with one sequence-to-sequence model.
 
 <p align="center">
   <img src="img/representation.jpeg" alt="Spatial hierarchy and semantic granularity across vision tasks" width="700">
@@ -108,19 +112,12 @@ A DaViT vision encoder turns the image into visual embeddings. These are concate
 
 ### Training data: FLD-5B
 
-The model's strength comes mostly from its data. The authors built **FLD-5B**, with 5.4 billion annotations (boxes, masks, captions, grounding) on 126 million images, generated largely automatically with specialist models and filtered with quality checks.
+The model's strength comes mostly from its data. The authors built FLD-5B, with 5.4 billion annotations (boxes, masks, captions, grounding) on 126 million images, generated largely automatically with specialist models and filtered with quality checks.
 
 <p align="center">
   <img src="img/annotation.jpeg" alt="Example of FLD-5B annotations" width="700">
   <br><em>Source: Florence-2 paper.</em>
 </p>
-
-## Resources
-
-- **Paper:** [Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks](https://arxiv.org/abs/2311.06242)
-- **Model cards:** [microsoft/Florence-2-large](https://huggingface.co/microsoft/Florence-2-large) · [Transformers documentation](https://huggingface.co/docs/transformers/model_doc/florence2)
-- **Fine-tuning:** [Fine-tuning Florence-2 (Hugging Face blog)](https://huggingface.co/blog/finetune-florence2) · [Florence-2 DocVQA model](https://huggingface.co/HuggingFaceM4/Florence-2-DocVQA) · [DocVQA demo](https://huggingface.co/spaces/andito/Florence-2-DocVQA)
-- **Guides:** [Florence-2: Open Source Vision Foundation Model by Microsoft (Roboflow blog)](https://blog.roboflow.com/florence-2/) · [Vision Language Models Explained](https://huggingface.co/blog/vlms)
 
 ## Citation
 
@@ -134,3 +131,7 @@ If you use Florence-2, please cite the original paper:
   year    = {2023}
 }
 ```
+
+## License
+
+The code and notebooks in this repository are released under the [MIT License](LICENSE). Florence-2's weights are MIT-licensed by Microsoft, and linked projects keep their own licenses.
