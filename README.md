@@ -1,4 +1,13 @@
+<div align="center">
+
 # Florence-2 Cookbook
+
+[![arXiv](https://img.shields.io/badge/arXiv-2311.06242-b31b1b.svg)](https://arxiv.org/abs/2311.06242)
+[![Models on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Models-Florence--2-yellow)](https://huggingface.co/florence-community)
+[![Transformers docs](https://img.shields.io/badge/%F0%9F%A4%97%20Transformers-docs-blue)](https://huggingface.co/docs/transformers/model_doc/florence2)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+</div>
 
 <p align="center">
   <img src="img/banner.png" alt="Florence-2 Cookbook" width="100%">
@@ -7,11 +16,6 @@
 Hands-on notebooks and a short guide to Florence-2, Microsoft's lightweight vision-language model: run inference on 14 built-in tasks, auto-label images, fine-tune the model on your own data, score its boxes, answer questions and measure its speed.
 
 For models, tools, papers and tutorials from the wider ecosystem, see the [Awesome Florence-2 list](AWESOME.md).
-
-[![arXiv](https://img.shields.io/badge/arXiv-2311.06242-b31b1b.svg)](https://arxiv.org/abs/2311.06242)
-[![Models on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Models-Florence--2-yellow)](https://huggingface.co/florence-community)
-[![Transformers docs](https://img.shields.io/badge/%F0%9F%A4%97%20Transformers-docs-blue)](https://huggingface.co/docs/transformers/model_doc/florence2)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > [!NOTE]
 > This is an independent community project. Florence-2 was created by Microsoft; this repository is not affiliated with or endorsed by Microsoft. For the original work, see the [paper](https://arxiv.org/abs/2311.06242) and the [official model card](https://huggingface.co/microsoft/Florence-2-large).
